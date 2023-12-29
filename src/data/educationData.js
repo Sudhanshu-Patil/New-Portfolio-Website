@@ -16,7 +16,7 @@ export const educationData = [
     {
         id: 3,
         institution: 'Saint Marys English School',
-        course: 'Secondary School Certificate',
+        course: 'Secondary School Certificate (SSC)',
         startYear: '2007',
         endYear: '2019'
     },
