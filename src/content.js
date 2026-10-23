@@ -8,7 +8,7 @@ export const profile = {
   email: 'sudhanshupatil588@gmail.com',
   phone: '+91 72489 13660',
   phoneHref: 'tel:+917248913660',
-  address: 'Pune, Maharashtra, India',
+  address: 'Manish Layout, Nagpur 440022, India',
   resume: '/Sudhanshu_Patil_AI_Engineer.pdf',
   github: 'https://github.com/Sudhanshu-Patil',
   linkedin: 'https://www.linkedin.com/in/sudhpatil',
