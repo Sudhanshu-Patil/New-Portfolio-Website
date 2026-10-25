@@ -31,7 +31,8 @@ body {
   color: var(--color-ink);
 }
 
-:focus-visible {
+/* Inputs show focus with their own accent border instead. */
+:focus-visible:not(input) {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
 }
