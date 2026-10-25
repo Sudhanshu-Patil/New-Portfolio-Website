@@ -13,6 +13,7 @@ import {
   LinkedinLogo,
   Phone,
 } from '@phosphor-icons/react'
+import Assistant from './Assistant.jsx'
 import { certifications, education, experience, featured, honors, moreWork, profile, proof, stack } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -537,6 +538,7 @@ export default function App() {
         <Credentials />
         <Contact />
       </main>
+      <Assistant />
     </>
   )
 }

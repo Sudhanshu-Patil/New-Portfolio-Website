@@ -3,7 +3,7 @@
 
 /* Dark-only by design: the particle story needs a dark stage.
    Radius rule: interactive elements are full pills, panels and images are rounded-2xl.
-   Layers: canvas z-0, content z-10, nav z-20. */
+   Layers: canvas z-0, content z-10, nav z-20, assistant z-30. */
 @theme {
   --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", ui-monospace, monospace;
