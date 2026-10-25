@@ -33,7 +33,7 @@ export const proof = [
 
 export const experience = [
   {
-    role: 'Freelance AI Engineer',
+    role: 'AI Engineer (Freelance / Contract)',
     company: '',
     place: 'Remote',
     period: 'Jul 2026 - Present',
