@@ -39,6 +39,18 @@ assert.match(sent.messages[0].content, /FOLLOWUPS: /)
 assert.ok(sent.messages.length <= 9, 'history trimmed to 8 + system')
 assert.ok(sent.messages.slice(1).every((m) => m.content.length <= 600), 'messages capped at 600 chars')
 
+// a 429 on the first model falls back to the second
+const models = []
+globalThis.fetch = async (_url, init) => {
+  const { model } = JSON.parse(init.body)
+  models.push(model)
+  if (models.length === 1) return new Response('slow down', { status: 429 })
+  return new Response('data: {"choices":[{"delta":{"content":"ok"}}]}\n\n')
+}
+const fb = await POST(req({ messages: [{ role: 'user', content: 'hi' }] }, '5.5.5.5'))
+assert.equal(await fb.text(), 'ok')
+assert.deepEqual(models, ['openai/gpt-oss-120b', 'openai/gpt-oss-20b'])
+
 let last
 for (let i = 0; i < 21; i++) last = await POST(req({ messages: [{ role: 'user', content: 'hi' }] }, '9.9.9.9'))
 assert.equal(last.status, 429)

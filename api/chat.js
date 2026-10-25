@@ -3,20 +3,27 @@
 import * as site from '../src/content.js'
 
 // Groq retires models every few months; override with GROQ_MODEL in Vercel without a code change.
-const MODEL = process.env.GROQ_MODEL || 'openai/gpt-oss-120b'
+// The fallback has its own free-tier quota, so a 429 on the first model retries on the second.
+const MODELS = [process.env.GROQ_MODEL || 'openai/gpt-oss-120b', 'openai/gpt-oss-20b']
 const { profile } = site
 
-const DATA = JSON.stringify({
-  profile: { ...profile, resume: undefined, phoneHref: undefined },
-  highlights: site.proof,
-  experience: site.experience,
-  featuredProjects: site.featured,
-  moreProjects: site.moreWork,
-  stack: site.stack,
-  education: site.education,
-  honors: site.honors,
-  certifications: site.certifications,
-})
+// Compact plain text, not JSON: the free tier allows 8K tokens per minute, so every token counts.
+const links = (ls) => ls.map((l) => `${l.label}: ${l.href}`).join(', ')
+const DATA = [
+  `${profile.name}, ${profile.role}. Email ${profile.email}. Phone ${profile.phone}. Based in ${profile.address}. ${profile.availability}`,
+  `GitHub ${profile.github}. LinkedIn ${profile.linkedin}. LeetCode ${profile.leetcode}.`,
+  `Highlights: ${site.proof.map((p) => `${p.value} ${p.label}`).join('; ')}.`,
+  'Experience:',
+  ...site.experience.map((j) => `- ${j.role}${j.company ? ` at ${j.company}` : ''}, ${j.place}, ${j.period}. ${j.note} ${j.points.join(' ')}`),
+  'Featured projects:',
+  ...site.featured.map((p) => `- ${p.name}: ${p.tagline}. ${p.problem} Pipeline: ${p.pipeline.join(' > ')}. ${p.facts.join('; ')}. ${links(p.links)}`),
+  'Other projects:',
+  ...site.moreWork.map((w) => `- ${w.name}: ${w.desc} ${links(w.links)}`),
+  `Stack: ${site.stack.map((s) => `${s.group}: ${s.items.join(', ')}`).join('. ')}.`,
+  `Education: ${site.education.degree}, ${site.education.school}, ${site.education.period}.`,
+  `Honors: ${site.honors.join('; ')}.`,
+  `Certifications: ${site.certifications.join('; ')}.`,
+].join('\n')
 
 const SYSTEM = `You are the assistant on Sudhanshu Patil's portfolio website. Visitors are mostly recruiters and hiring managers.
 Answer questions about Sudhanshu using ONLY the portfolio data below. Refer to him in the third person.
@@ -61,18 +68,22 @@ export async function POST(req) {
     .map((m) => ({ role: m.role, content: m.content.slice(0, 600) }))
   if (!messages.length || messages.at(-1).role !== 'user') return json({ error: 'bad_request' }, 400)
 
-  const upstream = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      model: MODEL,
-      stream: true,
-      temperature: 0.3,
-      reasoning_effort: 'low',
-      max_tokens: 900, // includes the model's hidden reasoning tokens
-      messages: [{ role: 'system', content: SYSTEM }, ...messages],
-    }),
-  }).catch(() => null)
+  let upstream
+  for (const model of MODELS) {
+    upstream = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model,
+        stream: true,
+        temperature: 0.3,
+        reasoning_effort: 'low',
+        max_tokens: 650, // includes the model's hidden reasoning tokens
+        messages: [{ role: 'system', content: SYSTEM }, ...messages],
+      }),
+    }).catch(() => null)
+    if (upstream?.status !== 429) break
+  }
   if (!upstream?.ok || !upstream.body) {
     console.error('groq error', upstream?.status, await upstream?.text().catch(() => ''))
     return json({ error: upstream?.status === 429 ? 'rate_limited' : 'upstream' }, 502)
