@@ -5,8 +5,8 @@ const gh = (repo) => `https://github.com/Sudhanshu-Patil/${repo}`
 // Which chat robot the site shows. 'builtin' is the React assistant in src/Assistant.jsx.
 // 'glance' loads the open-source Glance widget from the deployment below instead. Flip back any time.
 export const assistant = {
-  mode: 'glance',
-  glanceSrc: 'https://glance-test-nine.vercel.app/widget.js',
+  mode: 'builtin',
+  glanceSrc: '', // e.g. 'https://your-glance.vercel.app/widget.js'
 }
 
 export const profile = {
