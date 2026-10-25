@@ -2,7 +2,8 @@
 // Groq's free tier. The whole portfolio fits in the prompt, so no vector store is needed.
 import * as site from '../src/content.js'
 
-const MODEL = 'llama-3.3-70b-versatile'
+// Groq retires models every few months; override with GROQ_MODEL in Vercel without a code change.
+const MODEL = process.env.GROQ_MODEL || 'openai/gpt-oss-120b'
 const { profile } = site
 
 const DATA = JSON.stringify({
@@ -67,11 +68,15 @@ export async function POST(req) {
       model: MODEL,
       stream: true,
       temperature: 0.3,
-      max_tokens: 450,
+      reasoning_effort: 'low',
+      max_tokens: 900, // includes the model's hidden reasoning tokens
       messages: [{ role: 'system', content: SYSTEM }, ...messages],
     }),
   }).catch(() => null)
-  if (!upstream?.ok || !upstream.body) return json({ error: upstream?.status === 429 ? 'rate_limited' : 'upstream' }, 502)
+  if (!upstream?.ok || !upstream.body) {
+    console.error('groq error', upstream?.status, await upstream?.text().catch(() => ''))
+    return json({ error: upstream?.status === 429 ? 'rate_limited' : 'upstream' }, 502)
+  }
 
   // Groq streams OpenAI-style SSE; forward only the text deltas as plain text.
   const enc = new TextEncoder()
