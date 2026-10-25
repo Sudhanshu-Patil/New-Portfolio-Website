@@ -14,7 +14,7 @@ import {
   Phone,
 } from '@phosphor-icons/react'
 import Assistant from './Assistant.jsx'
-import { certifications, education, experience, featured, honors, logos, moreWork, profile, proof, stack } from './content'
+import { assistant, certifications, education, experience, featured, honors, logos, moreWork, profile, proof, stack } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -427,6 +427,26 @@ function Contact() {
   )
 }
 
+// Glance, the open-source version of the assistant, loaded with one script tag like any other site would.
+function GlanceEmbed({ src }) {
+  useEffect(() => {
+    const s = document.createElement('script')
+    s.src = src
+    s.defer = true
+    Object.assign(s.dataset, {
+      name: 'Sudhanshu',
+      contact: profile.email,
+      suggestions: 'What did he build at SimpleWorks?|Tell me about MediClaim|Where is he open to work?',
+    })
+    document.body.append(s)
+    return () => {
+      s.remove()
+      document.querySelector('glance-chat')?.remove()
+    }
+  }, [src])
+  return null
+}
+
 export default function App() {
   const canvasRef = useRef(null)
   const sceneRef = useRef(null)
@@ -560,7 +580,7 @@ export default function App() {
         <Credentials />
         <Contact />
       </main>
-      <Assistant />
+      {assistant.mode === 'glance' && assistant.glanceSrc ? <GlanceEmbed src={assistant.glanceSrc} /> : <Assistant />}
     </>
   )
 }
