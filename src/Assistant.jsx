@@ -7,6 +7,20 @@ const SUGGESTIONS = ['What did he build at SimpleWorks?', 'Tell me about MediCla
 // Fallback follow-ups when the model skips its FOLLOWUPS line.
 const POOL = [...SUGGESTIONS, 'What did he do at Novartis?', 'What is his AI stack?', 'Which certifications does he hold?', 'How can I contact him?']
 
+// Models sometimes use markdown despite instructions: keep **bold**, drop heading marks.
+// Returns plain segments; bold is rendered as an element, never as HTML.
+function richParts(text) {
+  return text
+    .replace(/^#{1,6}\s+/gm, '')
+    .split(/(\*\*[^*\n]+\*\*)/)
+    .filter(Boolean)
+    .map((p) => (/^\*\*[^*\n]+\*\*$/.test(p) ? { bold: true, text: p.slice(2, -2) } : { bold: false, text: p }))
+}
+
+function Rich({ text }) {
+  return richParts(text).map((p, i) => (p.bold ? <strong key={i}>{p.text}</strong> : p.text))
+}
+
 // The model ends each answer with "FOLLOWUPS: q1 | q2". Hide that line (even mid-stream) and return the questions.
 function splitAnswer(text) {
   const i = text.search(/\n?\s*FOLLOW/)
@@ -307,7 +321,7 @@ export default function Assistant() {
                   m.role === 'user' ? 'ml-auto bg-accent text-ink' : 'bg-ink/70 text-fg'
                 }`}
               >
-                {(m.role === 'assistant' ? splitAnswer(m.content)[0] : m.content) || (
+                {(m.role === 'assistant' ? splitAnswer(m.content)[0] && <Rich text={splitAnswer(m.content)[0]} /> : m.content) || (
                   <span className="animate-pulse text-muted">Thinking</span>
                 )}
               </p>
