@@ -141,6 +141,22 @@ export const featured = [
     ],
     links: [{ label: 'Live app', href: 'https://ats-ready.onrender.com/' }],
   },
+  {
+    name: 'Glance',
+    tagline: 'Open-source AI assistant for any portfolio, with a robot that has moods',
+    problem: 'Most portfolio chatbots need a paid API, a vector database and a React rewrite. This one needs a free key and a script tag.',
+    pipeline: ['knowledge.md', 'Vercel function', 'Groq gpt-oss-120b', 'Fallback model', 'Streamed answer'],
+    facts: [
+      'Zero dependencies, Shadow DOM, works on any site',
+      'Happy, thinking, surprised, sad and sleepy moods',
+      'Origin lock and per-visitor rate limit for the free tier',
+      'Five-step setup with a one-click Vercel deploy',
+    ],
+    links: [
+      { label: 'Live demo', href: 'https://glance-chat.vercel.app' },
+      { label: 'Code', href: gh('glance-chat') },
+    ],
+  },
 ]
 
 export const moreWork = [
