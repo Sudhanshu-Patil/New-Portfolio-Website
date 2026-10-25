@@ -4,6 +4,16 @@ import { PaperPlaneRight, X } from '@phosphor-icons/react'
 import { profile } from './content'
 
 const SUGGESTIONS = ['What did he build at SimpleWorks?', 'Tell me about MediClaim', 'Where is he open to work?']
+// Fallback follow-ups when the model skips its FOLLOWUPS line.
+const POOL = [...SUGGESTIONS, 'What did he do at Novartis?', 'What is his AI stack?', 'Which certifications does he hold?', 'How can I contact him?']
+
+// The model ends each answer with "FOLLOWUPS: q1 | q2". Hide that line (even mid-stream) and return the questions.
+function splitAnswer(text) {
+  const i = text.search(/\n?\s*FOLLOW/)
+  if (i < 0) return [text, []]
+  const tail = text.slice(i).replace(/^\s*FOLLOWUPS?:?/, '')
+  return [text.slice(0, i).trimEnd(), tail.split('|').map((q) => q.trim()).filter((q) => q.length > 3).slice(0, 2)]
+}
 
 // Eye shapes per mood. Border radius always uses the 8-value form so GSAP can morph between them.
 const R = (a) => `${a[0]}% ${a[1]}% ${a[2]}% ${a[3]}% / ${a[4]}% ${a[5]}% ${a[6]}% ${a[7]}%`
@@ -182,7 +192,17 @@ export default function Assistant() {
 
   useEffect(() => {
     list.current?.scrollTo({ top: list.current.scrollHeight })
-  }, [messages])
+  }, [messages, busy])
+
+  const last = messages.at(-1)
+  const asked = new Set(messages.filter((m) => m.role === 'user').map((m) => m.content))
+  const followUps =
+    last?.role === 'assistant' && last.content
+      ? (() => {
+          const fromModel = splitAnswer(last.content)[1].filter((q) => !asked.has(q))
+          return fromModel.length ? fromModel : POOL.filter((q) => !asked.has(q)).slice(0, 2)
+        })()
+      : []
 
   function close() {
     setOpen(false)
@@ -260,7 +280,7 @@ export default function Assistant() {
             </button>
           </header>
 
-          <div ref={list} data-lenis-prevent className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4" aria-live="polite">
+          <div ref={list} data-lenis-prevent className="flex-1 space-y-3 overflow-y-auto overscroll-contain px-4 py-4 [scrollbar-color:rgb(255_255_255/0.15)_transparent] [scrollbar-width:thin]" aria-live="polite">
             {messages.length === 0 && (
               <div>
                 <p className="text-sm leading-relaxed text-muted">
@@ -287,9 +307,25 @@ export default function Assistant() {
                   m.role === 'user' ? 'ml-auto bg-accent text-ink' : 'bg-ink/70 text-fg'
                 }`}
               >
-                {m.content || <span className="animate-pulse text-muted">Thinking</span>}
+                {(m.role === 'assistant' ? splitAnswer(m.content)[0] : m.content) || (
+                  <span className="animate-pulse text-muted">Thinking</span>
+                )}
               </p>
             ))}
+            {!busy && followUps.length > 0 && (
+              <div className="flex flex-wrap gap-2 pt-1">
+                {followUps.map((s) => (
+                  <button
+                    key={s}
+                    type="button"
+                    onClick={() => send(s)}
+                    className="rounded-full border border-line px-3 py-1.5 text-left text-xs text-fg transition-colors hover:border-accent hover:text-accent"
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
           <form

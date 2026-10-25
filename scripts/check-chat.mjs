@@ -35,6 +35,7 @@ assert.equal(res.status, 200)
 assert.equal(await res.text(), 'He built MediClaim.')
 assert.equal(sent.messages[0].role, 'system')
 assert.match(sent.messages[0].content, /MediClaim/)
+assert.match(sent.messages[0].content, /FOLLOWUPS: /)
 assert.ok(sent.messages.length <= 9, 'history trimmed to 8 + system')
 assert.ok(sent.messages.slice(1).every((m) => m.content.length <= 600), 'messages capped at 600 chars')
 
