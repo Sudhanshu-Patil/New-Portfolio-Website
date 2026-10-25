@@ -183,6 +183,16 @@ export const moreWork = [
   },
 ]
 
+// Logos in public/logos, shown in the moving strip above the stack groups.
+export const logos = [
+  ['python', 'Python'], ['pytorch', 'PyTorch'], ['huggingface', 'Hugging Face'], ['langchain', 'LangChain'],
+  ['ollama', 'Ollama'], ['qdrant', 'Qdrant'], ['neo4j', 'Neo4j'], ['fastapi', 'FastAPI'],
+  ['postgresql', 'PostgreSQL'], ['redis', 'Redis'], ['docker', 'Docker'], ['kubernetes', 'Kubernetes'],
+  ['amazonwebservices', 'AWS'], ['azure', 'Azure'], ['googlecloud', 'Google Cloud'], ['githubactions', 'GitHub Actions'],
+  ['nginx', 'Nginx'], ['linux', 'Linux'], ['react', 'React'], ['nextjs', 'Next.js'],
+  ['mysql', 'MySQL'], ['sqlite', 'SQLite'], ['cplusplus', 'C++'],
+]
+
 export const stack = [
   { group: 'AI and ML', items: ['LLMs', 'RAG', 'Agentic AI', 'MCP', 'LangGraph', 'LangChain', 'LlamaIndex', 'NER', 'QLoRA / PEFT', 'PyTorch', 'RAGAS', 'Guardrails'] },
   { group: 'Backend', items: ['Python', 'FastAPI', 'Pydantic', 'Async (ARQ)', 'OAuth 2.1', 'REST APIs', 'C++', 'SQL', 'React', 'Next.js'] },

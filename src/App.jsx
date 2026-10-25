@@ -14,7 +14,7 @@ import {
   Phone,
 } from '@phosphor-icons/react'
 import Assistant from './Assistant.jsx'
-import { certifications, education, experience, featured, honors, moreWork, profile, proof, stack } from './content'
+import { certifications, education, experience, featured, honors, logos, moreWork, profile, proof, stack } from './content'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -281,12 +281,34 @@ function MoreWork() {
   )
 }
 
+// The page's one marquee: two copies of the strip so the loop is seamless.
+function LogoStrip() {
+  return (
+    <div className="logo-strip reveal relative mt-14 overflow-hidden" aria-label="Technologies I work with">
+      <div className="logo-track flex w-max">
+        {[0, 1].map((copy) => (
+          <ul key={copy} className="flex shrink-0 items-center gap-14 pr-14" aria-hidden={copy === 1 || undefined}>
+            {logos.map(([file, name]) => (
+              <li key={file}>
+                <img src={`/logos/${file}.svg`} alt={copy ? '' : name} title={name} width="40" height="40" loading="lazy" className="h-10 w-auto max-w-14 opacity-90 transition-[opacity,transform] duration-300 hover:scale-110 hover:opacity-100" />
+              </li>
+            ))}
+          </ul>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function Stack() {
   return (
     <section id="stack" data-shape="4" className="relative py-24 md:py-36">
+      <div className={wrap}>
+        <H2>Tools I reach for.</H2>
+      </div>
+      <LogoStrip />
       <div className={`${wrap} grid lg:grid-cols-12`}>
         <div className="lg:col-span-7">
-          <H2>Tools I reach for.</H2>
           <div className="mt-12 grid gap-10 sm:grid-cols-2">
             {stack.map((s) => (
               <div key={s.group} className="reveal">
