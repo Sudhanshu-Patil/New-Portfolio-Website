@@ -12,7 +12,7 @@ function splitAnswer(text) {
   const i = text.search(/\n?\s*FOLLOW/)
   if (i < 0) return [text, []]
   const tail = text.slice(i).replace(/^\s*FOLLOWUPS?:?/, '')
-  return [text.slice(0, i).trimEnd(), tail.split('|').map((q) => q.trim()).filter((q) => q.length > 3).slice(0, 2)]
+  return [text.slice(0, i).trimEnd(), tail.split(/\||(?<=\?)\s+/).map((q) => q.trim()).filter((q) => q.length > 3).slice(0, 2)]
 }
 
 // Eye shapes per mood. Border radius always uses the 8-value form so GSAP can morph between them.
