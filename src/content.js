@@ -157,7 +157,7 @@ export const featured = [
       "The widget reads the page in the visitor's browser, so React sites work and no scraping server is needed",
       'Zero dependencies, Shadow DOM, works on any site',
       'Visual robot moods: happy, thinking, surprised, sad and sleepy',
-      'Four-step setup with a one-click Vercel deploy',
+      'Powers the robot on this site. Try it in the corner',
     ],
     links: [
       { label: 'Live demo', href: 'https://glance-chat.vercel.app' },
