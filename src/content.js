@@ -145,11 +145,11 @@ export const featured = [
     name: 'Glance',
     tagline: 'Open-source AI assistant for any portfolio, with a robot that has moods',
     problem: 'Most portfolio chatbots need a paid API, a vector database and hand-written knowledge. This one reads your site and needs a free key and a script tag.',
-    pipeline: ['Reads your site', 'Vercel function', 'Groq gpt-oss-120b', 'Fallback model', 'Streamed answer'],
+    pipeline: ['Widget reads your site in the browser', 'Vercel function', 'Groq gpt-oss-120b', 'Fallback model', 'Streamed answer'],
     facts: [
-      'Learns from the portfolio it lives on, including React sites',
+      "The widget reads the page in the visitor's browser, so React sites work and no scraping server is needed",
       'Zero dependencies, Shadow DOM, works on any site',
-      'Happy, thinking, surprised, sad and sleepy moods',
+      'Visual robot moods: happy, thinking, surprised, sad and sleepy',
       'Four-step setup with a one-click Vercel deploy',
     ],
     links: [
