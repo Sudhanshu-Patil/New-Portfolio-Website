@@ -50,6 +50,10 @@ function limited(ip) {
 const json = (body, status) => Response.json(body, { status })
 
 export async function POST(req) {
+  // Browsers on other sites send their Origin; refuse them before spending any quota.
+  const origin = req.headers.get('origin')
+  if (origin && URL.parse(origin)?.host !== req.headers.get('host')) return json({ error: 'forbidden' }, 403)
+
   const key = process.env.GROQ_API_KEY
   if (!key) return json({ error: 'offline' }, 503)
 

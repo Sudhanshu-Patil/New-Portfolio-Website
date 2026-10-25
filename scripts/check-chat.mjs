@@ -9,6 +9,12 @@ const req = (body, ip = '1.1.1.1') =>
     body: typeof body === 'string' ? body : JSON.stringify(body),
   })
 
+// other sites are refused, same-site and origin-less requests pass the check
+const foreign = new Request('http://x/api/chat', { method: 'POST', headers: { origin: 'https://evil.example', host: 'x' }, body: '{}' })
+assert.equal((await POST(foreign)).status, 403)
+const same = new Request('http://x/api/chat', { method: 'POST', headers: { origin: 'http://x', host: 'x' }, body: '{}' })
+assert.notEqual((await POST(same)).status, 403)
+
 delete process.env.GROQ_API_KEY
 assert.equal((await POST(req({ messages: [{ role: 'user', content: 'hi' }] }))).status, 503)
 
