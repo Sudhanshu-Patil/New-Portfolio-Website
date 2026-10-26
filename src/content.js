@@ -253,7 +253,6 @@ export const honors = [
 
 export const certifications = [
   'Oracle Agentic AI Certified Professional (2026)',
-  'Oracle Agentic AI Foundations Associate (2026)',
   'Kubernetes LFS158, Linux Foundation (2026)',
   'Docker Foundations Professional (2026)',
   'Databricks Fundamentals (2026)',
