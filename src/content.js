@@ -43,7 +43,7 @@ export const experience = [
       'Added an approval layer re-checked on every tool call, so revoking access cuts a user off mid-session, and per-call metered credits charged in a single conditional UPDATE so balances never go negative under concurrency.',
       'Deployed on AWS ECS Fargate behind an ALB with secrets in SSM, multi-arch images and rolling deploys at 100% minimum healthy.',
       "Shipped 19 PRs in about a week on a WhatsApp CRM over Meta's Cloud API: error-code-aware retries, pre-send broadcast checks, and a region fix that removed inbox lag.",
-      'Alongside client work, shipped Redline, AI Email Reply, a multi-tenant chatbot platform, a restaurant reception agent and a settlement feasibility engine (all below).',
+      'Alongside client work, shipped Waypoint (an AI travel concierge), Redline, AI Email Reply, a multi-tenant chatbot platform, a restaurant reception agent and a settlement feasibility engine (all below).',
     ],
   },
   {
@@ -89,6 +89,19 @@ export const featured = [
       { label: 'Watch demo', href: 'https://www.loom.com/share/248fda054e1f455087bacdba58c52b00' },
       { label: 'Code', href: gh('MediClaim') },
     ],
+  },
+  {
+    name: 'Waypoint',
+    tagline: 'AI travel concierge that plans your trip, watches it, and learns from it',
+    problem: "Most AI trip planners hand you a confident wall of text. Waypoint only shows what a real source returned, and says so when something can't be known yet.",
+    pipeline: ['Plain-English intake', 'Feasibility check', 'Google Places + Routes', '3 verified plans', 'Honest pricing', 'In-trip alerts'],
+    facts: [
+      'Google ADK agent on Groq gpt-oss with a fallback chain',
+      'Dates and deadlines computed in code; every plan verified before it is stored',
+      'Costs marked observed, estimated or unknown; unknowns become scheduled re-checks',
+      'Flight and weather alerts over Telegram, checked for invented facts',
+    ],
+    links: [{ label: 'Live app', href: 'https://itinerary-concierge.onrender.com/' }],
   },
   {
     name: 'Redline',
