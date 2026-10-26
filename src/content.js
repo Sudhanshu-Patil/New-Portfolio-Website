@@ -101,7 +101,10 @@ export const featured = [
       'Costs marked observed, estimated or unknown; unknowns become scheduled re-checks',
       'Flight and weather alerts over Telegram, checked for invented facts',
     ],
-    links: [{ label: 'Live app', href: 'https://itinerary-concierge.onrender.com/' }],
+    links: [
+      { label: 'Live app', href: 'https://itinerary-concierge.onrender.com/' },
+      { label: 'Watch demo', href: 'https://itinerary-concierge.onrender.com/static/walkthrough.mp4' },
+    ],
   },
   {
     name: 'Redline',
