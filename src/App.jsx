@@ -478,6 +478,16 @@ export default function App() {
 
     // Magnetic buttons: a slight pull toward the cursor, elastic release. Mouse/trackpad only.
     const off = []
+    // Touch: a tap fills the button for a moment, then the CSS transition drains it back out.
+    const press = (e) => {
+      if (e.pointerType === 'mouse') return
+      const el = e.target.closest?.('.btn-fill')
+      if (!el) return
+      el.classList.add('pressed')
+      setTimeout(() => el.classList.remove('pressed'), 450)
+    }
+    document.addEventListener('pointerdown', press, { passive: true })
+    off.push(() => document.removeEventListener('pointerdown', press))
     if (!reduced && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       document.querySelectorAll('.btn-fill').forEach((el) => {
         const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3.out' })

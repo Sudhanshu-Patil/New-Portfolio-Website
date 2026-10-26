@@ -117,9 +117,20 @@ body {
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     border-radius 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
-.btn-fill:hover::before {
+/* Mouse: fill while hovered. Touch screens keep :hover "stuck" after a tap, so a tap instead adds
+   .pressed for a moment (see App.jsx): the fill rises, then drains back out. Label turns dark while filled. */
+@media (hover: hover) and (pointer: fine) {
+  .btn-fill:hover::before {
+    transform: translateY(0);
+    border-radius: 0;
+  }
+}
+.btn-fill.pressed::before {
   transform: translateY(0);
   border-radius: 0;
+}
+.btn-fill.pressed {
+  color: var(--color-ink);
 }
 @media (prefers-reduced-motion: reduce) {
   .btn-fill::before {
