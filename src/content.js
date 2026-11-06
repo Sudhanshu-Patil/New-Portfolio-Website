@@ -43,7 +43,7 @@ export const experience = [
       'Added an approval layer re-checked on every tool call, so revoking access cuts a user off mid-session, and per-call metered credits charged in a single conditional UPDATE so balances never go negative under concurrency.',
       'Deployed on AWS ECS Fargate behind an ALB with secrets in SSM, multi-arch images and rolling deploys at 100% minimum healthy.',
       "Shipped 19 PRs in about a week on a WhatsApp CRM over Meta's Cloud API: error-code-aware retries, pre-send broadcast checks, and a region fix that removed inbox lag.",
-      'Alongside client work, shipped Waypoint (an AI travel concierge), Redline, AI Email Reply, a multi-tenant chatbot platform, a restaurant reception agent and a settlement feasibility engine (all below).',
+      'Alongside client work, shipped Waypoint (an AI travel concierge), Cedar Lane (a voice AI receptionist), Redline, AI Email Reply, a multi-tenant chatbot platform, a restaurant reception agent and a settlement feasibility engine (all below).',
     ],
   },
   {
@@ -107,6 +107,23 @@ export const featured = [
     ],
   },
   {
+    name: 'Cedar Lane',
+    tagline: 'Voice AI receptionist that answers the phone and books real appointments',
+    problem: "A one-bay detailing shop misses calls whenever the owner is under a car or the shop is closed. Every missed call is a missed booking.",
+    pipeline: ['Phone, chat or browser voice', 'Vapi (Deepgram + gpt-4.1-mini)', 'Calendar tools', 'Re-check before booking', 'Sheets call log', 'Human handoff'],
+    facts: [
+      'Moving voice off Gemini cut model latency 4.6× (2.5 s → 0.54 s median); best calls ~1.2 s per turn',
+      'Never trusts the model on availability: the calendar is re-checked right before every booking',
+      'Spoken phone digits normalized in code and read back, after speech-to-text dropped digits in testing',
+      'Call outcomes come only from tool results; refunds, complaints and quotes go to a human',
+    ],
+    links: [
+      { label: 'Live app', href: 'https://cedar-lane-receptionist.onrender.com' },
+      { label: 'Watch call', href: 'https://drive.google.com/file/d/1ZmsE1UJmPs0Io7qPFsGfqDrgnU2P4NZH/view' },
+      { label: 'Code', href: gh('Cedar-Lane-Receptionist') },
+    ],
+  },
+  {
     name: 'Redline',
     tagline: 'Deterministic diffs and grounded chat for engineering drawings',
     problem: 'Two revisions of a drawing. Which tags, dimensions and entities actually changed?',
@@ -152,19 +169,6 @@ export const featured = [
     links: [{ label: 'Code', href: gh('AI-Email-Reply') }],
   },
   {
-    name: 'ATS-Ready',
-    tagline: 'AI resume engineering platform, built solo on a zero-cost stack',
-    problem: 'Built during my own job hunt. One master profile in, a role-specific resume, ATS score and cover letter out.',
-    pipeline: ['Parse JD', 'Match skills', 'Tailor', 'DOCX export'],
-    facts: [
-      'Redis-backed async workers, so LLM jobs never block requests',
-      'Job feed aggregated from 7 sources, ranked against your skills',
-      'JWT with refresh tokens, rate limiting, Razorpay billing',
-      '37 tests and Playwright end-to-end in 3-stage CI',
-    ],
-    links: [{ label: 'Live app', href: 'https://ats-ready.onrender.com/' }],
-  },
-  {
     name: 'Glance',
     tagline: 'Open-source AI assistant for any portfolio, with a robot that has moods',
     problem: 'Most portfolio chatbots need a paid API, a vector database and hand-written knowledge. This one reads your site and needs a free key and a script tag.',
@@ -184,6 +188,11 @@ export const featured = [
 
 export const moreWork = [
   {
+    name: 'ATS-Ready',
+    desc: 'AI resume platform built solo: one profile in, a tailored resume, ATS score and cover letter out. Redis async workers, a 7-source job feed, Razorpay billing and Playwright E2E in CI.',
+    links: [{ label: 'Live', href: 'https://ats-ready.onrender.com/' }],
+  },
+  {
     name: 'Multi-tenant Chatbot Platform',
     desc: 'JWT auth, versioned prompts, file uploads, and one Responses API client that runs on OpenAI, Groq or Ollama.',
     links: [
@@ -191,6 +200,11 @@ export const moreWork = [
       { label: 'Demo', href: 'https://drive.google.com/file/d/1g-iSS7p6ZR8o6qGr6mXd7UN8F8d7nIGj/view' },
       { label: 'Code', href: gh('Chatbot') },
     ],
+  },
+  {
+    name: 'Restaurant Reception Agent',
+    desc: 'Multi-turn booking, ordering, menu Q&A and customer memory over a black-box FastAPI backend, streamed over SSE.',
+    links: [{ label: 'Code', href: gh('Restaurant-reception-Agent') }],
   },
   {
     name: 'Context-Aware Retrieval Engine',
@@ -204,11 +218,6 @@ export const moreWork = [
       { label: 'Demo', href: 'https://www.loom.com/share/5af18aeb60834d799ebd3cdd7988222d' },
       { label: 'Code', href: gh('make-daily-company-reports') },
     ],
-  },
-  {
-    name: 'Restaurant Reception Agent',
-    desc: 'Multi-turn booking, ordering, menu Q&A and customer memory over a black-box FastAPI backend, streamed over SSE.',
-    links: [{ label: 'Code', href: gh('Restaurant-reception-Agent') }],
   },
   {
     name: 'Settlement Feasibility Engine',
@@ -233,7 +242,7 @@ export const logos = [
 ]
 
 export const stack = [
-  { group: 'AI and ML', items: ['LLMs', 'RAG', 'Agentic AI', 'MCP', 'LangGraph', 'LangChain', 'LlamaIndex', 'NER', 'QLoRA / PEFT', 'PyTorch', 'RAGAS', 'Guardrails'] },
+  { group: 'AI and ML', items: ['LLMs', 'RAG', 'Agentic AI', 'Voice AI (Vapi)', 'MCP', 'LangGraph', 'LangChain', 'LlamaIndex', 'NER', 'QLoRA / PEFT', 'PyTorch', 'RAGAS', 'Guardrails'] },
   { group: 'Backend', items: ['Python', 'FastAPI', 'Pydantic', 'Async (ARQ)', 'OAuth 2.1', 'REST APIs', 'C++', 'SQL', 'React', 'Next.js'] },
   { group: 'Data', items: ['PostgreSQL', 'Redis', 'Qdrant', 'ChromaDB', 'Neo4j', 'MySQL', 'SQLite'] },
   { group: 'Cloud and Ops', items: ['Azure AI Foundry', 'AWS Bedrock', 'AWS ECS Fargate', 'GCP', 'Docker', 'Kubernetes', 'GitHub Actions', 'Nginx', 'Langfuse', 'Linux'] },
