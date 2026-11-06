@@ -96,10 +96,10 @@ export const featured = [
     problem: "Most AI trip planners hand you a confident wall of text. Waypoint only shows what a real source returned, and says so when something can't be known yet.",
     pipeline: ['Plain-English intake', 'Feasibility check', 'Google Places + Routes', '3 verified plans', 'Honest pricing', 'In-trip alerts'],
     facts: [
-      'Google ADK agent on Groq gpt-oss with a fallback chain',
-      'Dates and deadlines computed in code; every plan verified before it is stored',
-      'Costs marked observed, estimated or unknown; unknowns become scheduled re-checks',
-      'Flight and weather alerts over Telegram, checked for invented facts',
+      'Six fallback searches lifted fare coverage on Indian routes from 3% to 80%',
+      'Everyday place names (Delhi, Bombay, Manali) recognised: 47% → 100%',
+      'Slowest planning stage 6× faster (28.6 s → 4.6 s) with bounded concurrency',
+      'LLM only extracts intent; every plan verified in code; 1,288 tests',
     ],
     links: [
       { label: 'Live app', href: 'https://itinerary-concierge.onrender.com/' },
