@@ -80,10 +80,10 @@ export const featured = [
     problem: 'A friend spent six weeks fighting a denied claim. The answer sat in a 140-page policy nobody could cite.',
     pipeline: ['Input guardrails', 'Intent routing', 'Dense + BM25 + Neo4j', 'RRF + rerank', 'Grounding check', 'LLM judge', 'Human review'],
     facts: [
-      '3B Llama fine-tuned with QLoRA, merged and quantized',
-      'Policy lookup, claim search and fraud detection as MCP tools',
-      'RAGAS regression on a golden dataset for every change',
-      'Load-tested, red-teamed, traced in Langfuse and LangSmith',
+      'Hybrid + graph retrieval: 1.0 recall, 0.955 precision, 50% higher faithfulness',
+      'Red-teamed with 12 hostile cases: all 12 bad drafts sent to human review',
+      '770 docs/min ingestion; unchanged re-runs 32× faster; 364 ms typical search',
+      'QLoRA-tuned 3B Llama and MCP tools, on a $0 free-tier stack in 198 MB RAM',
     ],
     links: [
       { label: 'Watch demo', href: 'https://www.loom.com/share/248fda054e1f455087bacdba58c52b00' },
