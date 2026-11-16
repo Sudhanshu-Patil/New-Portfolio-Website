@@ -139,10 +139,10 @@ export const featured = [
       'OTel-shaped trace on every stage',
     ],
     links: [
-      { label: 'Watch demo', href: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/view' },
+      { label: 'Watch demo', href: 'https://github.com/user-attachments/assets/49dc6f8e-15c9-49fe-87eb-f98f621a6d7c' },
       { label: 'Code', href: gh('Redline') },
     ],
-    // video: { embed: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/preview' }, // re-enable once the Drive file is shared publicly
+    video: { src: '/videos/redline.mp4', poster: '/videos/redline.jpg' },
   },
   {
     name: 'Telecom Triage',
@@ -157,8 +157,10 @@ export const featured = [
     ],
     links: [
       { label: 'Live app', href: 'https://telecom-request.streamlit.app' },
+      { label: 'Watch demo', href: 'https://github.com/user-attachments/assets/1b2f98c1-d725-4d16-9e08-f82014de8e9f' },
       { label: 'Code', href: gh('telecom-request-workflow') },
     ],
+    video: { src: '/videos/telecom.mp4', poster: '/videos/telecom.jpg' },
   },
   {
     name: 'AI Email Reply',
