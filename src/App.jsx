@@ -203,13 +203,38 @@ function Experience() {
   )
 }
 
+// Demo videos: our own files play muted on loop while on screen (poster until then, nothing preloaded);
+// Loom and Drive videos can't be downloaded, so they use the host's player and play on click.
+function Demo({ video, name }) {
+  const ref = useRef(null)
+  useEffect(() => {
+    const v = ref.current
+    if (!v || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const io = new IntersectionObserver(([e]) => (e.isIntersecting ? v.play().catch(() => {}) : v.pause()), { threshold: 0.5 })
+    io.observe(v)
+    return () => io.disconnect()
+  }, [])
+  const box = 'aspect-video w-full rounded-xl border border-line bg-ink'
+  return video.embed ? (
+    <iframe src={video.embed} title={`${name} demo video`} loading="lazy" allow="autoplay; fullscreen" allowFullScreen className={box} />
+  ) : (
+    <video ref={ref} src={video.src} poster={video.poster} muted loop playsInline controls preload="none" aria-label={`${name} demo video`} className={`${box} object-cover`} />
+  )
+}
+
 function Panel({ p }) {
   return (
-    <article className="flex h-full flex-col rounded-2xl border border-line bg-surface/80 p-6 backdrop-blur-md md:p-8">
+    <article className="flex h-full flex-col gap-8 rounded-2xl border border-line bg-surface/80 p-6 backdrop-blur-md md:p-8 lg:flex-row lg:items-center lg:p-7">
+      {p.video && (
+        <div className="lg:order-last lg:w-[42%] lg:shrink-0">
+          <Demo video={p.video} name={p.name} />
+        </div>
+      )}
+      <div className="flex min-w-0 flex-1 flex-col self-stretch">
       <h3 className="text-3xl font-semibold tracking-tighter md:text-4xl">{p.name}</h3>
       <p className="mt-2 text-muted">{p.tagline}</p>
-      <p className="mt-6 max-w-[38ch] text-xl leading-snug">{p.problem}</p>
-      <ol className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-3" aria-label="Pipeline">
+      <p className="mt-6 max-w-[38ch] text-xl leading-snug lg:mt-4 lg:text-lg">{p.problem}</p>
+      <ol className="mt-6 flex flex-wrap items-center gap-x-2 gap-y-3 lg:mt-4 lg:gap-y-2" aria-label="Pipeline">
         {p.pipeline.map((step, i) => (
           <li key={step} className="flex items-center gap-2">
             <span className="rounded-full border border-line px-3 py-1.5 font-mono text-xs text-fg/90">{step}</span>
@@ -217,7 +242,7 @@ function Panel({ p }) {
           </li>
         ))}
       </ol>
-      <ul className="mt-6 grid gap-x-8 gap-y-2 text-sm leading-relaxed text-muted md:grid-cols-2">
+      <ul className="mt-6 grid gap-x-8 gap-y-2 text-sm leading-relaxed text-muted md:grid-cols-2 lg:mt-4">
         {p.facts.map((f) => (
           <li key={f} className="flex gap-3">
             <Check size={16} className="mt-0.5 shrink-0 text-accent" aria-hidden />
@@ -225,13 +250,14 @@ function Panel({ p }) {
           </li>
         ))}
       </ul>
-      <div className="mt-auto flex flex-wrap gap-3 pt-8">
+      <div className="mt-auto flex flex-wrap gap-3 pt-8 lg:pt-5">
         {p.links.map((l, i) => (
           <ExtLink key={l.href} href={l.href} className={i === 0 ? primary : ghost}>
             {l.label}
             <ArrowUpRight size={16} weight="bold" />
           </ExtLink>
         ))}
+      </div>
       </div>
     </article>
   )
@@ -246,7 +272,7 @@ function Work() {
       </div>
       <div className="work-track mt-10 flex flex-col gap-6 px-4 md:px-8 lg:mt-8 lg:w-max lg:flex-row lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-[10vw]">
         {featured.map((p) => (
-          <div key={p.name} className="reveal lg:w-[min(72vw,900px)] lg:shrink-0">
+          <div key={p.name} className={`reveal lg:shrink-0 ${p.video ? 'lg:w-[min(88vw,1280px)]' : 'lg:w-[min(72vw,900px)]'}`}>
             <Panel p={p} />
           </div>
         ))}

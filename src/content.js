@@ -86,9 +86,11 @@ export const featured = [
       'QLoRA-tuned 3B Llama and MCP tools, on a $0 free-tier stack in 198 MB RAM',
     ],
     links: [
+      { label: 'Live app', href: 'https://sudhanshu-patil-mediclaim-uiapp-ptrmof.streamlit.app/' },
       { label: 'Watch demo', href: 'https://www.loom.com/share/248fda054e1f455087bacdba58c52b00' },
       { label: 'Code', href: gh('MediClaim') },
     ],
+    video: { embed: 'https://www.loom.com/embed/248fda054e1f455087bacdba58c52b00' },
   },
   {
     name: 'Waypoint',
@@ -105,6 +107,7 @@ export const featured = [
       { label: 'Live app', href: 'https://itinerary-concierge.onrender.com/' },
       { label: 'Watch demo', href: 'https://itinerary-concierge.onrender.com/static/walkthrough.mp4' },
     ],
+    video: { src: '/videos/waypoint.mp4', poster: '/videos/waypoint.jpg' },
   },
   {
     name: 'Cedar Lane',
@@ -122,6 +125,7 @@ export const featured = [
       { label: 'Watch call', href: 'https://drive.google.com/file/d/1ZmsE1UJmPs0Io7qPFsGfqDrgnU2P4NZH/view' },
       { label: 'Code', href: gh('Cedar-Lane-Receptionist') },
     ],
+    video: { src: '/videos/cedar.mp4', poster: '/videos/cedar.jpg' },
   },
   {
     name: 'Redline',
@@ -138,6 +142,7 @@ export const featured = [
       { label: 'Watch demo', href: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/view' },
       { label: 'Code', href: gh('Redline') },
     ],
+    video: { embed: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/preview' },
   },
   {
     name: 'Telecom Triage',
@@ -166,7 +171,11 @@ export const featured = [
       'Runs fully offline with a mock provider',
       '96 tests',
     ],
-    links: [{ label: 'Code', href: gh('AI-Email-Reply') }],
+    links: [
+      { label: 'Watch demo', href: 'https://github.com/user-attachments/assets/39f17bca-201d-4d4b-8dc9-f51cb03d5ba0' },
+      { label: 'Code', href: gh('AI-Email-Reply') },
+    ],
+    video: { src: '/videos/email.mp4', poster: '/videos/email.jpg' },
   },
   {
     name: 'Glance',
@@ -181,12 +190,19 @@ export const featured = [
     ],
     links: [
       { label: 'Live demo', href: 'https://glance-chat.vercel.app' },
+      { label: 'Watch demo', href: 'https://github.com/user-attachments/assets/e5b176f1-4bdc-4f63-94b6-439178d3e692' },
       { label: 'Code', href: gh('glance-chat') },
     ],
+    video: { src: '/videos/glance.mp4', poster: '/videos/glance.jpg' },
   },
 ]
 
 export const moreWork = [
+  {
+    name: 'GazeCam',
+    desc: 'Real-time eye-contact correction for Windows calls: gaze following, blink pass-through and per-user calibration on a published warping model, on CPU as a virtual camera.',
+    links: [{ label: 'Code', href: gh('GazeCam') }],
+  },
   {
     name: 'ATS-Ready',
     desc: 'AI resume platform built solo: one profile in, a tailored resume, ATS score and cover letter out. Redis async workers, a 7-source job feed, Razorpay billing and Playwright E2E in CI.',
@@ -233,19 +249,19 @@ export const moreWork = [
 
 // Logos in public/logos, shown in the moving strip above the stack groups.
 export const logos = [
-  ['python', 'Python'], ['pytorch', 'PyTorch'], ['huggingface', 'Hugging Face'], ['langchain', 'LangChain'],
+  ['python', 'Python'], ['typescript', 'TypeScript'], ['googlegemini', 'Gemini'], ['pytorch', 'PyTorch'], ['huggingface', 'Hugging Face'], ['langchain', 'LangChain'],
   ['ollama', 'Ollama'], ['qdrant', 'Qdrant'], ['neo4j', 'Neo4j'], ['fastapi', 'FastAPI'],
-  ['postgresql', 'PostgreSQL'], ['redis', 'Redis'], ['docker', 'Docker'], ['kubernetes', 'Kubernetes'],
+  ['postgresql', 'PostgreSQL'], ['supabase', 'Supabase'], ['streamlit', 'Streamlit'], ['redis', 'Redis'], ['docker', 'Docker'], ['kubernetes', 'Kubernetes'],
   ['amazonwebservices', 'AWS'], ['azure', 'Azure'], ['googlecloud', 'Google Cloud'], ['githubactions', 'GitHub Actions'],
   ['nginx', 'Nginx'], ['linux', 'Linux'], ['react', 'React'], ['nextjs', 'Next.js'],
   ['mysql', 'MySQL'], ['sqlite', 'SQLite'], ['cplusplus', 'C++'],
 ]
 
 export const stack = [
-  { group: 'AI and ML', items: ['LLMs', 'RAG', 'Agentic AI', 'Voice AI (Vapi)', 'MCP', 'LangGraph', 'LangChain', 'LlamaIndex', 'NER', 'QLoRA / PEFT', 'PyTorch', 'RAGAS', 'Guardrails'] },
-  { group: 'Backend', items: ['Python', 'FastAPI', 'Pydantic', 'Async (ARQ)', 'OAuth 2.1', 'REST APIs', 'C++', 'SQL', 'React', 'Next.js'] },
-  { group: 'Data', items: ['PostgreSQL', 'Redis', 'Qdrant', 'ChromaDB', 'Neo4j', 'MySQL', 'SQLite'] },
-  { group: 'Cloud and Ops', items: ['Azure AI Foundry', 'AWS Bedrock', 'AWS ECS Fargate', 'GCP', 'Docker', 'Kubernetes', 'GitHub Actions', 'Nginx', 'Langfuse', 'Linux'] },
+  { group: 'AI and ML', items: ['LLMs', 'RAG', 'Agentic AI', 'Voice AI (Vapi)', 'Google ADK', 'Gemini (function calling)', 'Groq', 'LiteLLM', 'Deepgram', 'MCP', 'LangGraph', 'LangChain', 'LlamaIndex', 'NER', 'QLoRA / PEFT', 'PyTorch', 'RAGAS', 'Guardrails', 'MediaPipe', 'TensorFlow Lite'] },
+  { group: 'Backend', items: ['Python', 'TypeScript', 'Node.js', 'FastAPI', 'Pydantic', 'Async (ARQ)', 'OAuth 2.1', 'REST APIs', 'C++', 'SQL', 'React', 'Next.js', 'Streamlit'] },
+  { group: 'Data', items: ['PostgreSQL', 'Supabase', 'Redis', 'Qdrant', 'ChromaDB', 'Neo4j', 'MySQL', 'SQLite'] },
+  { group: 'Cloud and Ops', items: ['Azure AI Foundry', 'AWS Bedrock', 'AWS ECS Fargate', 'GCP', 'Docker', 'Kubernetes', 'GitHub Actions', 'Nginx', 'Langfuse', 'Vercel', 'Render', 'Linux'] },
 ]
 
 export const education = {
