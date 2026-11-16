@@ -142,7 +142,7 @@ export const featured = [
       { label: 'Watch demo', href: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/view' },
       { label: 'Code', href: gh('Redline') },
     ],
-    video: { embed: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/preview' },
+    // video: { embed: 'https://drive.google.com/file/d/1PZXix5YPPk2Vv7bS1BxfMjkkR7xWPG0K/preview' }, // re-enable once the Drive file is shared publicly
   },
   {
     name: 'Telecom Triage',
